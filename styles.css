@@ -1,0 +1,255 @@
+@font-face {
+    font-family: 'Anonymous';
+    src: url(./Asset/Fonts/Anonymous_Pro/AnonymousPro-Bold.ttf);
+    font-display: swap;
+}
+
+/* Genel Stiller */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Anonymous', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background-color: white;
+    /* Opak kalması için */
+    border-bottom: 1px solid #e0e0e0;
+
+}
+
+/* Navbar Stilleri */
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 50px;
+}
+
+.nav-links.left,
+.nav-links.right {
+    list-style: none;
+    display: flex;
+    gap: 70px;
+}
+
+.nav-links li {
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.nav-links li:hover {
+    background-color: #f2f2f2;
+    cursor: pointer;
+    transform: translateY(-2px);
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-size: 22px;
+    /* büyütüldü */
+}
+
+.nav-links a::after {
+    content: "";
+    display: block;
+    height: 2px;
+    background: black;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+}
+
+.logo img {
+    width: 200px;
+    height: auto;
+    margin: 10px;
+    /* üstten boşluk */
+    transition: transform 0.3s;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Game Section */
+.game-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 1s ease;
+}
+
+.game-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.game-info {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    text-align: center;
+    font-size: 24px;
+    background-color: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 30px;
+    color: white;
+}
+
+.game-info img {
+    width: 500px;
+    height: auto;
+}
+
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+
+.background-video iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    filter: blur(12px);
+    opacity: 0.5;
+    pointer-events: none;
+    border: none;
+}
+
+.background-video::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    /* veya oyuna özel bir koyu ton */
+    opacity: 0.3;
+    z-index: -2;
+}
+
+/* Butonlar */
+.button {
+    display: inline-block;
+    border-radius: 5px;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.button:hover {
+    transform: scale(1.05);
+}
+
+.steam-button {
+    padding: 5px 10px;
+}
+
+.steam-button img {
+    width: 120px;
+}
+
+.more-button {
+    background: #f0c14b;
+    color: black;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 2s ease forwards;
+    animation-delay: 1s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .logo img {
+        width: 180px;
+    }
+
+    .game-section {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+        min-height: 400px;
+    }
+
+    .game-info img {
+        width: 80%;
+    }
+
+    .game-info {
+        font-size: 18px;
+    }
+
+    .steam-button img {
+        width: 100px;
+    }
+
+    .more-button {
+        padding: 8px 12px;
+    }
+}
