@@ -430,12 +430,11 @@ html {
 
 .all-games-slider .container {
     /* Slider'ın container içinde nasıl duracağını buradan ayarlayabilirsin */
-    /* Örneğin, mobilde tam genişlik kullanmak için:
     @media (max-width: 768px) {
         padding-left: 0;
         padding-right: 0;
     }
-    */
+
 }
 
 .games-slider-wrapper {
@@ -803,11 +802,6 @@ html {
 @media screen and (max-width: 768px) {
 
     /* --- 1. Global ve Genel Ayarlar --- */
-
-    body {
-        /* Mobilde yazı boyutları biraz daha küçük olabilir, ama şimdilik iyi görünüyor. */
-        /* İhtiyaç duyarsan: font-size: 15px; */
-    }
 
     .container {
         padding: 0 20px;
