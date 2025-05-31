@@ -18,43 +18,46 @@
 
 body {
     font-family: 'Anonymous', sans-serif;
+    background-color: #d8d8ec;
+    color: #333333;
 }
 
 
 /* Header ve Navbar */
 header {
-    background-color: white; 
-    border-bottom: 1px solid #e0e0e0; 
-}
-.navbar {
-    display: grid; 
-    grid-template-columns: 1fr auto 1fr; 
-    align-items: center; 
     background-color: white;
-    padding: 10px 40px; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.navbar {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    background-color: white;
+    padding: 10px 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .nav-links {
-    list-style: none; 
-    display: flex; 
-    gap: 90px; 
+    list-style: none;
+    display: flex;
+    gap: 90px;
 }
 
 .nav-links.left {
-    justify-content: flex-end; 
-    padding-right: 10%; 
+    justify-content: flex-end;
+    padding-right: 10%;
 }
 
 .nav-links.right {
-    justify-content: flex-start; 
+    justify-content: flex-start;
     padding-left: 10%;
 }
 
 .nav-links li {
     padding: 10px;
     border-radius: 5px;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
 }
 
 .nav-links li:hover {
@@ -81,6 +84,7 @@ header {
 .nav-links a:hover::after {
     transform: scaleX(1);
 }
+
 /* Logo */
 .logo {
     display: flex;
@@ -98,138 +102,194 @@ header {
     transform: scale(1.05);
 }
 
-/* Game Section */
+/* Genel Sayfa Ayarları */
+html {
+    scroll-behavior: smooth;
+    /* Sayfa içi linklere tıklayınca yumuşak kayar */
+}
+
+/* Yan Navigasyon (Noktalar) */
+.side-nav {
+    position: fixed;
+    top: 50%;
+    right: 30px;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.side-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.side-nav li {
+    margin: 20px 0;
+    position: relative;
+}
+
+.side-nav .dot {
+    display: block;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.side-nav .dot:hover {
+    background-color: #ffffff;
+    transform: scale(1.2);
+}
+
+.side-nav .dot.active {
+    background-color: #f0c14b;
+    /* Ana sayfadaki buton rengini kullandım */
+    transform: scale(1.5);
+}
+
+/* Noktaların üzerine gelince oyun adını gösteren etiket */
+.side-nav .dot span {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1a1a1a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.side-nav li:hover .dot span {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* Ana Oyun Bölümleri */
 .game-section {
     position: relative;
     height: 100vh;
     display: flex;
-    justify-content: center;
     align-items: center;
-    transition: background 1s ease;
-}
-
-.game-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.background-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    justify-content: space-between;
+    /* İki ana kutu arasında boşluk bırakır */
+    gap: 5%;
+    /* Video ve bilgi kutusu arasında %5'lik boşluk */
+    padding: 0 5%;
+    /* Sayfanın kenarlarından boşluk */
     overflow: hidden;
-    z-index: -1;
+    /* Koyu tema için statik bir desen ekleyelim */
+    background-image: radial-gradient(#ffffff08 1px, transparent 1px);
+    background-size: 20px 20px;
 }
 
-.background-video iframe {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    filter: blur(12px);
-    opacity: 0.5;
-    pointer-events: none;
+/* Arka Plan Videosu (Aynı kalıyor) */
+/* YENİ: Video Gösterim Alanı */
+.game-video-showcase {
+    flex: 1 1 55%;
+    /* Alanın %55'ini kaplasın */
+    height: 65vh;
+    /* Yüksekliği ekranın %65'i kadar olsun */
+    max-height: 500px;
+    /* Ama 500px'den de yüksek olmasın */
+    background: #000;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    /* iframe'in köşelerini de yuvarlak yapmak için */
+}
+
+.game-video-showcase iframe {
+    width: 100%;
+    height: 100%;
     border: none;
 }
 
-.background-video::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-    opacity: 0.3;
-    z-index: -2;
-}
-
-/* Game Info */
+/* Oyun Tanıtım Kutusu (YENİ STİL - Glassmorphism) */
 .game-info {
+    position: relative;
+    z-index: 2;
+    flex: 1 1 35%;
+    background: rgba(30, 30, 45, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 25px 25px;
+    color: #f0f0f0;
+    text-align: left;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 30px;
-    border-radius: 20px;
-    font-size: 17px;
-    text-align: center;
-    color: white;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    gap: 15px;
+    /* Öğeler arası boşluğu azalttım */
 }
 
-.game-info img {
-    width: 400px;
-    border-radius: 50px;
-
+/* Ters Yerleşim için */
+.game-section.layout-reversed {
+    flex-direction: row-reverse;
+    /* Sadece bu kural yeterli! */
 }
 
 .game-info h2 {
-    font-size: 40px;
+    text-align: center;
+    font-family: 'Kavoon', sans-serif;
+    font-size: 28px;
+    /* Başlığı biraz küçülttüm */
+    color: #ffffff;
+    margin-top: 0;
+    margin-bottom: 5px;
+    /* Başlık alt boşluğu */
+}
+
+.game-info p {
+    text-align: center;
+    font-size: 16px;
+    line-height: 1.6;
     margin-bottom: 20px;
+    /* Metin alt boşluğu */
+    flex-grow: 1;
+    /* Metin alanı esnekçe büyüyebilir */
 }
 
-
-/* Buttons */
-.buttons {
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.button {
-    display: inline-block;
-    border-radius: 5px;
-    transition: transform 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-button.img {
+.game-info img {
+    max-width: 100%;
+    max-height: 200px;
+    /* Resmi biraz küçülttüm */
     height: auto;
+    border-radius: 8px;
+    object-fit: contain;
+    /* Resmi boyutlarına göre sığdır */
+    margin-bottom: 10px;
+    /* Resim alt boşluğu */
 }
 
-.button:hover {
-    transform: scale(1.05);
-}
 
-.steam-button {
-    padding: 5px 10px;
+/* Butonlar (Aynı kalıyor, sadece hizalama değişti) */
+.game-info .buttons {
+    display: flex;
+    /* Bunu ekleyerek kesin flex container olmasını sağlayalım */
+    justify-content: center;
+    /* Butonları yatayda ortalar */
+    align-items: center;
+    /* Dikeyde de ortalayabilir (isteğe bağlı) */
+    margin-top: auto;
+    /* Kutunun en altına yaslamak için */
 }
 
 .steam-button img {
     width: 120px;
 }
 
-.more-button {
-    background: #f0c14b;
-    color: black;
-    padding: 10px 15px;
-    text-decoration: none;
-}
-
-/* Animations */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 2s ease forwards;
-    animation-delay: 1s;
-}
 
 
 
-
+/* Footer */
 .footer {
     background-color: white;
     box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
@@ -306,63 +366,753 @@ button.img {
     font-size: 14px;
 }
 
-@keyframes fadeInUp {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+
+
+.hero-home {
+    height: 60vh;
+    background-image: url('./Asset/Images/home.png');
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    position: relative;
+    font-family: 'Kavoon', sans-serif;
 }
 
-/* Responsive */
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero-content .subtitle {
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+.hero-cta-button {
+    padding: 15px 30px;
+    font-size: 20px;
+    background-color: #f0c14b;
+    color: black;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.hero-cta-button:hover {
+    transform: scale(1.05);
+}
+
+
+.section-padding-light {
+    padding: 40px 20px;
+    background-color: #f9f9f9;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ============================================ */
+/* TÜM OYUNLAR KAYDIRMALI BÖLÜM STİLLERİ    */
+/* ============================================ */
+
+.all-games-slider .container {
+    /* Slider'ın container içinde nasıl duracağını buradan ayarlayabilirsin */
+    /* Örneğin, mobilde tam genişlik kullanmak için:
+    @media (max-width: 768px) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    */
+}
+
+.games-slider-wrapper {
+    overflow-x: auto;
+    /* Yatay kaydırmayı aktif et */
+    overflow-y: hidden;
+    /* Dikey kaydırma çubuğunu gizle */
+    -webkit-overflow-scrolling: touch;
+    /* iOS'ta daha akıcı kaydırma */
+    padding: 10px 0 20px 0;
+    /* Kaydırma çubuğu için altta biraz boşluk veya sadece görsel boşluk */
+
+    /* İsteğe Bağlı: Kaydırma Çubuğunu Gizleme (Tarayıcıya göre değişir) */
+    scrollbar-width: none;
+    /* Firefox için */
+    -ms-overflow-style: none;
+    /* IE ve Edge için */
+}
+
+.games-slider-wrapper::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera için */
+}
+
+/* İsteğe Bağlı: CSS Snap Points (Daha iyi kaydırma deneyimi için) */
+/* .games-slider-wrapper {
+    scroll-snap-type: x mandatory; /* Yatayda zorunlu yaslama */
+/* } */
+
+.games-slider {
+    display: flex;
+    /* Kartları yan yana diz */
+    flex-direction: row;
+    flex-wrap: nowrap;
+    /* Kartların alt satıra kaymasını engelle */
+    gap: 20px;
+    /* Kartlar arası boşluk */
+    /* padding: 0 10px; */
+    /* Slider'ın kendi içinde sağdan soldan hafif boşluk (isteğe bağlı) */
+}
+
+.game-slide-card {
+    flex: 0 0 auto;
+    /* Kartlar kendi genişliklerini korusun, esnemesin/büzülmesin */
+    width: 270px;
+    /* Her bir kartın genişliği */
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+    border: 1px solid #eee;
+    /* İsteğe Bağlı: CSS Snap Points */
+    /* scroll-snap-align: start; /* Kartları kaydırma alanının başına yasla */
+}
+
+.game-slide-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.game-slide-card img {
+    width: 100%;
+    height: 150px;
+    /* Kart resimleri için sabit bir yükseklik */
+    object-fit: cover;
+    /* Resimlerin en-boy oranını koruyarak alanı kaplamasını sağlar */
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.game-slide-card h3 {
+    font-family: 'Kavoon', sans-serif;
+    /* Kavoon veya Anonymous tercihine göre */
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    /* Uzun başlıkların tek satırda kalmasını sağlar */
+    overflow: hidden;
+    /* Taşmayı gizle */
+    text-overflow: ellipsis;
+    /* Taşan kısma "..." ekle */
+}
+
+.game-slide-card .game-short-desc {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    min-height: 30px;
+    /* Kısa açıklamaların aynı hizada durmasına yardımcı olur */
+}
+
+.game-slide-card .slider-button {
+    /* .button sınıfını da alıyor */
+    background-color: #5a6268;
+    /* Buton rengi */
+    color: white;
+    padding: 8px 20px;
+    font-size: 14px;
+    text-decoration: none;
+    /* Zaten .button'dan gelmeli ama garanti olsun */
+    border-radius: 5px;
+    /* Zaten .button'dan gelmeli ama garanti olsun */
+}
+
+.game-slide-card .slider-button:hover {
+    background-color: #495057;
+}
+
+/* Hakkımda Önizleme Bölümü Stilleri */
+/* "Ben Kimim?" bölümündeki .container'a özel dikdörtgen stili */
+.about-preview .container {
+    background-color: #ffffff;
+    border: 1px solid #d1d1d1;
+    border-left: 5px solid #6c757d;
+    padding: 35px 40px;
+    border-radius: 6px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+
+.about-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.about-content p {
+    flex: 1;
+    font-size: 18px;
+    line-height: 1.75;
+    color: #4a4a4a;
+    margin-top: 5px;
+}
+
+.profile-pic {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #ffffff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.profile-pic:hover {
+    transform: scale(1.07);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+/* section.about-preview için genel boşluklar (diğer bölümlerle arasında) */
+.section-padding {
+    padding: 60px 20px;
+}
+
+.card-button {
+    background: #555;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.card-button:hover {
+    background: #333;
+}
+
+
+
+/* YENİ VE TEMİZ HALİ */
+.section-title {
+    font-family: 'Kavoon', sans-serif;
+    font-size: 32px;
+    color: #1a1a1a;
+    margin-bottom: 40px;
+}
+
+/* "Ben Kimim?" başlığının özel stilini korumak için */
+.about-preview .section-title {
+    color: #2c3e50;
+    border-bottom: 2px solid #eeeeee;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.project-teaser-card {
+    display: flex;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.project-image {
+    flex: 0 0 40%;
+    min-height: 280px;
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.project-details {
+    flex: 1 1 400px;
+    padding: 20px 40px;
+    text-align: left;
+}
+
+.project-details h3 {
+    font-family: 'Anonymous', sans-serif;
+    font-size: 28px;
+    color: #222;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.project-status {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 15px;
+    display: inline-block;
+    background-color: #e7f3ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.project-description {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #454545;
+    margin-bottom: 25px;
+}
+
+.project-links .button {
+    margin-right: 10px;
+    padding: 10px 20px;
+}
+
+.project-links .button.primary-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.project-links .button.primary-button:hover {
+    background-color: #218838;
+}
+
+
+
+/* İletişim Formu Stilleri */
+/* Bölüm alt başlığı için (zaten varsa bu kısmı atlayabilirsiniz) */
+.section-subtitle {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+    color: #555;
+}
+
+.section-title {
+    font-family: 'Kavoon', sans-serif;
+    font-size: 32px;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.contact-form-container {
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 35px 45px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+    border: 1px solid #dcdcdc;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    /* Form grupları arası boşluk */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #495057;
+    /* Daha yumuşak bir label rengi */
+    font-size: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ced4da;
+    /* Yumuşak gri kenarlık */
+    border-radius: 6px;
+    font-family: inherit;
+    /* Ana fontu kullan */
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Placeholder metinleri için stil */
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #adb5bd;
+}
+
+/* Input alanına tıklandığında (focus) stil */
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #5a6268;
+    /* Vurgulu kenarlık rengi */
+    box-shadow: 0 0 0 3px rgba(108, 117, 125, 0.15);
+    /* Hafif bir parlama efekti */
+}
+
+.form-group textarea {
+    resize: vertical;
+    /* Sadece dikeyde boyutlandırılabilsin */
+    min-height: 120px;
+}
+
+.contact-submit-button {
+    background-color: #343a40;
+    /* Şık bir koyu gri */
+    color: #ffffff;
+    padding: 12px 35px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.contact-submit-button:hover {
+    background-color: #23272b;
+    /* Hover'da biraz daha koyu */
+    transform: translateY(-2px);
+    /* Hafif yukarı kalkma efekti */
+}
+
+
+/* ==========================================================================
+   TÜM SAYFALAR İÇİN KAPSAMLI MOBİL UYUMLULUK (768px ve altı)
+   ========================================================================== */
+
 @media screen and (max-width: 768px) {
+
+    /* --- 1. Global ve Genel Ayarlar --- */
+
+    body {
+        /* Mobilde yazı boyutları biraz daha küçük olabilir, ama şimdilik iyi görünüyor. */
+        /* İhtiyaç duyarsan: font-size: 15px; */
+    }
+
+    .container {
+        padding: 0 20px;
+        /* Mobilde genel container kenar boşlukları */
+    }
+
+    .section-padding {
+        padding: 40px 0;
+        /* Bölümler arası dikey boşlukları mobilde azalt */
+    }
+
+    .section-title {
+        font-size: 26px;
+        /* Bölüm başlıkları mobilde küçülsün */
+        margin-bottom: 30px;
+        /* Alt boşluk biraz azalsın */
+    }
+
+    /* "Ben Kimim?" gibi bazı özel bölüm başlıkları için */
+    .about-preview .section-title {
+        font-size: 24px;
+        /* Diğerlerinden biraz daha küçük olabilir */
+        margin-bottom: 15px;
+    }
+
+    .text-center {
+        text-align: center !important;
+        /* Gerekirse zorla ortala */
+    }
+
+
+    /* --- 2. Header / Navbar --- */
+
     .navbar {
         grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 10px 20px;
+        /* Logoyu ve linkleri alt alta sırala */
+        gap: 15px;
+        padding: 15px 20px;
     }
 
     .nav-links {
         flex-direction: column;
-        gap: 15px;
+        /* Linkleri dikey sırala */
+        gap: 10px;
         padding: 0;
     }
 
     .nav-links.left,
     .nav-links.right {
         justify-content: center;
+        /* Linkleri ortala */
         padding: 0;
     }
 
+    .nav-links li {
+        text-align: center;
+        /* Navigasyon link metinlerini ortala */
+    }
+
+    .nav-links li:hover {
+        transform: none;
+        background-color: #f2f2f2;
+    }
+
+    .logo {
+        order: -1;
+        /* Logoyu en üste al (nav-links'lerden önce) */
+    }
+
     .logo img {
-        width: 180px;
+        width: 160px;
+        margin: 0 auto;
+        /* Logoyu kendi satırında ortala */
     }
 
-    .game-section {
+
+    /* --- 3. HOME Sayfasına Özel Ayarlar --- */
+
+    /* Hero Bölümü (Home) */
+    .hero-home {
         height: auto;
-        min-height: 400px;
-        padding: 40px 20px;
-    }
-
-    .game-info {
-        font-size: 18px;
+        min-height: 70vh;
+        /* Yüksekliği içeriğe göre ayarla ama yine de büyük kalsın */
         padding: 20px;
     }
 
-    .game-info img {
-        width: 80%;
+    .hero-content h1 {
+        font-size: 32px;
+        /* Mobilde başlık */
     }
 
-    .buttons {
+    .hero-content .subtitle {
+        font-size: 17px;
+        /* Mobilde alt başlık */
+    }
+
+    /* Ben Kimim? Bölümü (Home) */
+    .about-preview .container {
+        padding: 25px;
+        border-left-width: 4px;
+    }
+
+    .about-preview .section-title {
+        /* Zaten yukarıda ayarlandı, spesifikse burada ezilebilir */
+        text-align: center;
+        /* HTML'de .text-center yoksa diye */
+    }
+
+    .about-content {
         flex-direction: column;
-        /* Mobilde alt alta göster */
-        gap: 15px;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .profile-pic {
+        width: 120px;
+        height: 120px;
+    }
+
+    .about-content p {
+        font-size: 16px;
+    }
+
+    /* Gelecek Projeler (Home) */
+    .project-teaser-card {
+        flex-direction: column;
+    }
+
+    .project-image {
+        flex-basis: auto;
+        width: 100%;
+        min-height: auto;
+        /* min-height'i sıfırla */
+        height: 200px;
+        /* veya aspect-ratio: 16/9; */
+        padding: 0;
+        /* Çerçeveyi mobilde kaldırabiliriz veya azaltabiliriz */
+    }
+
+    .project-image img {
+        border-radius: 12px 12px 0 0;
+        /* Sadece üst köşeler yuvarlak kalsın */
+    }
+
+    .project-details {
+        max-width: 100%;
+        text-align: center;
+        padding: 25px;
+    }
+
+    .project-links {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .project-links .button {
+        width: 100%;
+        max-width: 280px;
+        margin-right: 0;
+    }
+
+
+    /* --- 4. GAMES Sayfasına Özel Ayarlar ('Bölünmüş Ekran Vitrini') --- */
+
+    /* Yan Navigasyon mobilde gizlensin */
+    .side-nav {
+        display: none;
+    }
+
+    .game-section,
+    .game-section.layout-reversed {
+        flex-direction: column;
+        /* Her şeyi alt alta sırala */
+        justify-content: center;
+        height: auto;
+        min-height: 100vh;
+        /* Ekranı doldurmaya devam et ama içerik sığmazsa uzayabilsin */
+        padding: 60px 20px;
+        /* İçeriğin kenarlardan taşmaması için boşluk ver */
+        gap: 30px;
+        /* Video ve bilgi kutusu arası boşluk */
+    }
+
+    .game-video-showcase {
+        flex-basis: auto;
+        /* Esnekliği sıfırla */
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 9;
+        /* Video için sinematik oran */
+        max-height: none;
+        /* max-height kısıtlamasını kaldır */
+        margin-bottom: 20px;
+        /* Bilgi kutusuyla arasına boşluk */
+    }
+
+    .game-info {
+        flex-basis: auto;
+        /* Esnekliği sıfırla */
+        width: 100%;
+        text-align: center;
+        /* Mobilde metinleri ortala */
+        padding: 25px;
+        gap: 10px;
+        /* İç öğeler arası boşluk */
+    }
+
+    .game-info h2 {
+        font-size: 26px;
+        /* Mobilde başlık */
+    }
+
+    .game-info p {
+        font-size: 15px;
+        /* Mobilde metin */
+        margin-bottom: 15px;
+    }
+
+    .game-info img {
+        max-height: 150px;
+        /* Mobilde resim max yüksekliği */
+        margin-bottom: 15px;
+    }
+
+    .game-info .buttons {
+        justify-content: center;
+        /* Mobilde butonları ortala */
     }
 
     .steam-button img {
         width: 100px;
+        /* Buton resimleri biraz küçülsün */
     }
 
-    .more-button {
-        padding: 8px 12px;
+
+    /* --- 5. İletişim Formu (Home) --- */
+
+    .contact-section .section-subtitle {
+        margin-bottom: 30px;
+        font-size: 15px;
+    }
+
+    .contact-form-container {
+        padding: 25px 20px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .contact-submit-button {
+        padding: 10px 25px;
+        font-size: 15px;
+    }
+
+
+    /* --- 6. Footer --- */
+
+    .footer {
+        padding: 20px;
+        /* Footer genel boşluğu */
+    }
+
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 25px;
+        /* Footer bölümleri arası boşluk */
+    }
+
+    .footer-content .footer-title {
+        font-size: 48px !important;
+        /* Mobilde büyük kalsın diye */
+    }
+
+    .footer-content .social-title {
+        font-size: 20px;
+    }
+
+    .footer-column {
+        align-items: center;
+        min-width: auto;
+        padding-top: 0;
+    }
+
+    .footer-column h3 {
+        font-size: 20px;
+    }
+
+    .footer-column li {
+        font-size: 16px;
+    }
+
+    .footer-bottom {
+        padding-top: 20px;
+        text-align: center;
     }
 }
